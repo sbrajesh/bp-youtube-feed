@@ -38,7 +38,7 @@ function bp_yt_load_textdomain() {
         $locale = apply_filters( 'bp_yt_load_textdomain_get_locale', get_locale() );
 	// if load .mo file
 	if ( !empty( $locale ) ) {
-		$mofile_default = sprintf( '%s/languages/%s-%s.mo', BP_YT_PLUGIN_DIR, BP_YT_PLUGIN_NAME, $locale );
+		$mofile_default = sprintf( '%s/languages/%s.mo', BP_YT_PLUGIN_DIR, $locale );
 		$mofile = apply_filters( 'bp_gallery_load_textdomain_mofile', $mofile_default );
 		// make sure file exists, and load it
 		if ( file_exists( $mofile ) ) {
