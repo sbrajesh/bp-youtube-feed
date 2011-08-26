@@ -39,7 +39,7 @@ function bp_yt_load_textdomain() {
 	// if load .mo file
 	if ( !empty( $locale ) ) {
 		$mofile_default = sprintf( '%s/languages/%s.mo', BP_YT_PLUGIN_DIR, $locale );
-		$mofile = apply_filters( 'bp_gallery_load_textdomain_mofile', $mofile_default );
+		$mofile = apply_filters( 'bp_yt_load_textdomain_mofile', $mofile_default );
 		// make sure file exists, and load it
 		if ( file_exists( $mofile ) ) {
 			load_textdomain( BP_YT_PLUGIN_NAME, $mofile );
@@ -68,7 +68,7 @@ if(!bp_yt_is_enabled_for_members())
 
     /* Add the subnav items to the gallery nav item */
     bp_core_new_subnav_item( array( 'name' => __( 'My YouTube', 'bp-yt' ), 'slug' => 'my-yt', 'parent_url' => $yt_link, 'parent_slug' => $bp->yt->slug, 'screen_function' => 'bp_yt_screen_home', 'position' => 10, 'item_css_id' => 'yt-my-yt' ) );
-    bp_core_new_subnav_item( array( 'name' => __( 'Settings', 'bp-yt' ), 'slug' => 'settings', 'parent_url' => $yt_link, 'parent_slug' => $bp->yt->slug, 'screen_function' => 'bp_yt_screen_settings_user', 'position' => 20, 'user_has_access' => bp_is_home() ) );
+    bp_core_new_subnav_item( array( 'name' => __( 'Settings', 'bp-yt' ), 'slug' => 'settings', 'parent_url' => $yt_link, 'parent_slug' => $bp->yt->slug, 'screen_function' => 'bp_yt_screen_settings_user', 'position' => 20, 'user_has_access' => bp_is_my_profile() ) );
    
      do_action( 'yt_setup_nav');
     
@@ -79,7 +79,7 @@ function bp_yt_screen_home(){
     //catch the home screen of bp-yt
     global $bp;
     do_action( 'bp_yt_screen_home' );
-    if($bp->current_component==$bp->yt->slug){
+    if(bp_is_current_component($bp->yt->slug)){
         $bp->yt->is_home=true;
     }
     if($bp->current_action=="my-yt")
@@ -98,12 +98,13 @@ if(!bp_is_active("groups")||!bp_yt_is_enabled_for_groups()||!bp_yt_get_group_pre
     bp_core_new_subnav_item( array( 'name' =>   __( 'Youtube Feed', 'bp-yt' ), 'slug' => $bp->yt->slug, 'parent_url' => $component_link, 'parent_slug' => $component_slug, 'screen_function' => 'bp_yt_screen_group_home', 'position' => 15, 'user_has_access' => $bp->groups->current_group->user_has_access,'item_css_id' => 'associated-yt-home' ) );
   
 }
-add_action("bp_init","bp_yt_setup_group_nav",11);
+add_action("bp_setup_groups_nav","bp_yt_setup_group_nav",11);
+
 function bp_yt_screen_group_home(){
     //catch the home screen of bp-yt
     global $bp;
     do_action( 'bp_yt_screen_group_home' );
-    if($bp->current_component==$bp->groups->slug&&$bp->current_action==$bp->yt->slug){
+    if(bp_is_group_single()&&$bp->current_action==$bp->yt->slug){
         $bp->yt->is_home=true;
     }
   
@@ -115,7 +116,7 @@ function bp_yt_screen_group_home(){
 //for user settings screen
 function bp_yt_screen_settings_user(){
 global $bp;
-if($bp->current_component==$bp->yt->slug&&$bp->current_action=="settings"){
+if(bp_is_current_component($bp->yt->slug)&&$bp->current_action=="settings"){
 
     //settings screen
     if(!empty($_POST['save_settings'])){
@@ -124,7 +125,7 @@ if($bp->current_component==$bp->yt->slug&&$bp->current_action=="settings"){
         if(empty($_POST['yt_account']))
             bp_core_add_message(__("You must enter your yt account in order to display videos here.",'bp-yt'),'error');
         else{
-            update_usermeta($bp->loggedin_user->id, "yt_account", $_POST["yt_account"]);
+            update_user_meta($bp->loggedin_user->id, "yt_account", $_POST["yt_account"]);
        
             bp_core_add_message(__("Account updated.",'bp-yt'));
         }
@@ -137,11 +138,11 @@ bp_core_load_template(apply_filters('template_yt_settings','yt/index'));
 /*get yt nsid of user from user meta/group meta*/
 function bp_yt_get_user_account($obj_id=null){
     global $bp;
-    if(bp_is_member()){
+    if(bp_is_user()){
         if(empty($obj_id))
             $obj_id=$bp->displayed_user->id;
      
-    return get_usermeta($obj_id,"yt_account");//get feed
+    return get_user_meta($obj_id,"yt_account",true);//get feed
     }
 else if(bp_is_active("groups")&&bp_is_group ()){
     if(empty ($obj_id))

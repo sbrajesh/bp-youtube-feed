@@ -358,14 +358,14 @@ function bp_yt_get_item_data($key){
 
 function bp_yt_is_home(){
     global $bp;
-    if($bp->current_component==$bp->yt->slug&&$bp->current_action=="my-yt")
+    if(bp_is_current_component($bp->yt->slug)&&$bp->current_action=="my-yt")
             return true;
     return false;
 }
 
 function bp_yt_is_settings(){
     global $bp;
-    if($bp->current_component==$bp->yt->slug&&$bp->current_action=="settings")
+    if(bp_is_current_component($bp->yt->slug)&&$bp->current_action=="settings")
             return true;
     return false;
 }
