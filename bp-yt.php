@@ -5,10 +5,10 @@
  * Plugin URI:http://buddydev.com
  * Author URI:http://buddydev.com/members/sbrajesh
  * Description: allow users to show their latest uploaded youtube videos on their profile and allow group admins to associate youtube account with the group
- * Version: 1.0.1
- * Tested with wp 3.0.1+buddypress 1.2.6(bleeding)
+ * Version: 1.0.2
+ * Tested with wp 3.2.1+BuddyPress 1.5(bleeding)
  * License: GPL
- * Date: september 22, 2010
+ * Date: August 24, 2011 
  */
 
 define("BP_YT_PLUGIN_NAME","bp-yt");
