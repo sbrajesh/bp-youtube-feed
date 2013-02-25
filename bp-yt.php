@@ -90,15 +90,16 @@ function bp_yt_screen_home(){
 
 function bp_yt_setup_group_nav(){
   global $bp;
+  
 if(!bp_is_active("groups")||!bp_yt_is_enabled_for_groups()||!bp_yt_get_group_prefs())
     return;
     $component_link =bp_get_group_permalink($bp->groups->current_group);
 
-    $component_slug=$bp->groups->slug;
+    $component_slug=$bp->groups->current_group->slug;
     bp_core_new_subnav_item( array( 'name' =>   __( 'Youtube Feed', 'bp-yt' ), 'slug' => $bp->yt->slug, 'parent_url' => $component_link, 'parent_slug' => $component_slug, 'screen_function' => 'bp_yt_screen_group_home', 'position' => 15, 'user_has_access' => $bp->groups->current_group->user_has_access,'item_css_id' => 'associated-yt-home' ) );
   
 }
-add_action("bp_setup_groups_nav","bp_yt_setup_group_nav",11);
+add_action("groups_setup_nav","bp_yt_setup_group_nav",10);
 
 function bp_yt_screen_group_home(){
     //catch the home screen of bp-yt
