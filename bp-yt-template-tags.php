@@ -320,7 +320,7 @@ function bp_yt_get_item_data($key){
             //someme
             break;
         case "url":
-            $val=$item["link"][1]['href'];
+            $val=$item["link"][0]['href'];
             //someme
             break;
         case "l_url":
@@ -389,22 +389,25 @@ return $vid_id;
 //pass video id, width,height to generate the embed code
 function yt_get_video_code($video_id, $width, $height){
     
-        $code = "<object width=\"";
+    $code = "<object width=\"";
 	$code .= $width;
 	$code .= "\" height=\"";
 	$code .= $height;
-	$code .= "\"><param name=\"movie\" value=\"";
-	$code .= $video_id;
-	$code .= "\"></param><param name=\"wmode\" value=\"transparent\" ></param><embed src=\"http://www.youtube.com/v/";
-	$code .= $video_id;
+	$code .= "\">";
+     $code.='<param name="movie" value="https://youtube.googleapis.com/v/'.$video_id.'?version=2&fs=1"></param>';
+    $code.='<param name="allowFullScreen" value="true"></param>';
+    $code.='<param name="allowScriptAccess" value="always"></param>';
+  
+	$code.="<param name=\"wmode\" value=\"transparent\" ></param><embed src=\"https://youtube.googleapis.com/v/".$video_id."?version=2&fs=1\"";
 	$code .= "\" type=\"application/x-shockwave-flash\" wmode=\"transparent\" width=\"";
 	$code .= $width;
 	$code .= "\" height=\"";
 	$code .= $height;
-	$code .= "\"></embed></object>";
+	$code .= "\" allowfullscreen=\"true\" allowscriptaccess=\"always\"></embed></object>";
 
 	
 
     return $code;
 }
+
 ?>
