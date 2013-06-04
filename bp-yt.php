@@ -16,14 +16,15 @@ if(!defined("BP_YT_SLUG"))
 	define("BP_YT_SLUG","yt");
 
 
-define("BP_YT_PLUGIN_DIR",  untrailingslashit(plugin_dir_path(__FILE__)));
-define("BP_YT_PLUGIN_URL",  untrailingslashit(plugin_dir_url(__FILE__)));
+define("BP_YT_PLUGIN_DIR",  plugin_dir_path(__FILE__));
+define("BP_YT_PLUGIN_URL",  plugin_dir_url(__FILE__));
 
 function bp_yt_load(){
-include_once(BP_YT_PLUGIN_DIR."bp-yt-template-tags.php");
-if(bp_is_active("groups"))
-    include_once(BP_YT_PLUGIN_DIR."yt-group-admin.php");
-include_once(BP_YT_PLUGIN_DIR."bp-yt-css-js.php");
+    include_once(BP_YT_PLUGIN_DIR."bp-yt-template-tags.php");
+    
+    if(bp_is_active("groups"))
+        include_once(BP_YT_PLUGIN_DIR."yt-group-admin.php");
+    include_once(BP_YT_PLUGIN_DIR."bp-yt-css-js.php");
 }
 
 add_action("bp_loaded","bp_yt_load");
@@ -49,6 +50,7 @@ add_action ( 'bp_init', 'bp_yt_load_textdomain', 2 );
 
 function bp_yt_setup_globals(){
     global $bp;
+    $bp->yt=new stdClass();
     $bp->yt->id="yt";
     $bp->yt->slug=BP_YT_SLUG;
     $bp->active_components[$bp->yt->slug] = $bp->yt->id;
