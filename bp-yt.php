@@ -15,10 +15,9 @@ define("BP_YT_PLUGIN_NAME","bp-yt");
 if(!defined("BP_YT_SLUG"))
 	define("BP_YT_SLUG","yt");
 
-$bp_yt_dir =str_replace(basename( __FILE__),"",plugin_basename(__FILE__));
-define("BP_YT_DIR_NAME",$bp_yt_dir);//the directory name of bp-yt
-define("BP_YT_PLUGIN_DIR",WP_PLUGIN_DIR."/".BP_YT_DIR_NAME);
-define("BP_YT_PLUGIN_URL",WP_PLUGIN_URL."/".BP_YT_DIR_NAME);
+
+define("BP_YT_PLUGIN_DIR",  untrailingslashit(plugin_dir_path(__FILE__)));
+define("BP_YT_PLUGIN_URL",  untrailingslashit(plugin_dir_url(__FILE__)));
 
 function bp_yt_load(){
 include_once(BP_YT_PLUGIN_DIR."bp-yt-template-tags.php");
