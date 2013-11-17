@@ -136,7 +136,7 @@ if(empty($feed_link))
 if(!empty($feed_link)){
    
     $yt_template=new BP_YT_Template($feed_link,$page,$per_page,$max);
-    return apply_filters( 'bp_yt_has_items', $yt_template->has_items(), &$yt_template );
+    return apply_filters( 'bp_yt_has_items', $yt_template->has_items(), $yt_template );
 }
 else
     return false;
