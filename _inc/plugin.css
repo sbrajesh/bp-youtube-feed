@@ -1,0 +1,6 @@
+/*basic style for bp-yt*/
+/*edit it as you want*/
+.yt-item {float:left;padding:5px;width:313px;min-height:210px;height:220px;}
+.yt-item  h5{text-align:center;}
+.yt-item  img{display:block;margin:0 auto;}
+.yt-item  object{display:block;margin:0 auto;}

@@ -26,6 +26,7 @@ function bp_yt_load() {
         include_once( BP_YT_PLUGIN_DIR . 'yt-group-admin.php' );
     
     include_once( BP_YT_PLUGIN_DIR . 'bp-yt-css-js.php' );
+    include_once( BP_YT_PLUGIN_DIR . 'bp-yt-functions.php' );
 }
 
 add_action( 'bp_loaded', 'bp_yt_load' );
@@ -91,7 +92,15 @@ function bp_yt_screen_home() {
     }
     
     if( $bp->current_action == 'my-yt' ){
-        bp_core_load_template( apply_filters( 'template_yt_my_yt', 'yt/index' ) );
+        if(bp_yt_is_using_theme_compat() ){
+             add_action( 'bp_template_content', 'bp_yt_get_page_content' );
+        
+             bp_core_load_template( apply_filters( 'template_yt_my_yt', 'members/single/plugins' ) );
+        }else{
+            
+            bp_core_load_template( apply_filters( 'template_yt_my_yt', 'yt/index' ) ); 
+        }
+        
     }
     
 }
@@ -120,9 +129,14 @@ function bp_yt_screen_group_home() {
         $bp->yt->is_home = true;
     }
   
-     bp_core_load_template( apply_filters( 'template_yt_group_yt', 'yt/groups/index' ) );
-
-
+           if(bp_yt_is_using_theme_compat() ){
+             add_action( 'bp_template_content', 'bp_yt_get_group_page_content' );
+        
+             bp_core_load_template( apply_filters( 'template_yt_my_yt', 'groups/single/plugins' ) );
+        }else{
+            
+            bp_core_load_template( apply_filters( 'template_yt_my_yt', 'yt/groups/index' ) ); 
+        }
 }
 
 //for user settings screen
@@ -144,7 +158,14 @@ function bp_yt_screen_settings_user() {
             }
         }
         
-        bp_core_load_template(apply_filters('template_yt_settings','yt/index'));
+               if(bp_yt_is_using_theme_compat() ){
+             add_action( 'bp_template_content', 'bp_yt_get_page_content' );
+        
+             bp_core_load_template( apply_filters( 'template_yt_my_yt', 'members/single/plugins' ) );
+        }else{
+            
+            bp_core_load_template( apply_filters( 'template_yt_my_yt', 'yt/index' ) ); 
+        }
     }
 
 }

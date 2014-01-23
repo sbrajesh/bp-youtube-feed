@@ -1,0 +1,1 @@
+<?php bp_yt_load_template( 'yt/yt.php'  );?>
