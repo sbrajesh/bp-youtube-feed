@@ -4,7 +4,3 @@
         bp_yt_load_template( 'yt/settings.php');
     else
         bp_yt_load_template ( 'yt/members.php' );
-
-?>
-
-				
